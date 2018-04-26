@@ -1,2 +1,2 @@
 # Plant Logger
-Data logger for a plant management system
+Data logger for the sensors in a plant management system
