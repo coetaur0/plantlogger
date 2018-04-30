@@ -29,28 +29,22 @@ def init_yocto_api(ip, port):
     return True
 
 
-def modules(ip, port):
+def modules():
     """
     Generator to iterate over the Yoctopuce modules connected to the
-    VirtualHub at adress 'ip:port'.
-
-    Args:
-        ip: The IP adress of the Yoctopuce VirtualHub connected to the sensors.
-        port: The port on which the VirtualHub listens.
+    VirtualHub.
 
     Yields:
         The next Yoctopuce module connected to machine (as long as there is one
         that hasn't already been yielded).
     """
-    if init_yocto_api(ip, port):
-        module = YModule.FirstModule()
-        while module:
-            # Ignore the VirtualHub itself, as it is not a real physical
-            # module and it doesn't interest us for data logging.
-            if module.get_productName() != "VirtualHub":
-                yield module
-            module = module.nextModule()
-        YAPI.FreeAPI()
+    module = YModule.FirstModule()
+    while module:
+        # Ignore the VirtualHub itself, as it is not a real physical
+        # module and it doesn't interest us for data logging.
+        if module.get_productName() != "VirtualHub":
+            yield module
+        module = module.nextModule()
 
 
 def get_functions(module):

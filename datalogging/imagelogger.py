@@ -66,8 +66,9 @@ def imagelogger(configfile):
         record_images(url, duration, timesteps)
 
     # -------------------- Activation of callbacks -------------------- #
-    for module in yoctodevices.modules(config['VirtualHub']['host'],
-                                       config['VirtualHub']['port']):
+    yoctodevices.init_yocto_api(config['VirtualHub']['host'],
+                                config['VirtualHub']['port'])
+    for module in yoctodevices.modules():
         # Ignore all modules that aren't Yocto-relays.
         if "relay" not in module.get_productName().lower():
             continue
@@ -100,7 +101,5 @@ def imagelogger(configfile):
                 config.write(config_f)
 
         # -------------------- Callbacks listening -------------------- #
-        yoctodevices.init_yocto_api(config['VirtualHub']['host'],
-                                    config['VirtualHub']['port'])
         while True:
             YAPI.Sleep(1000)

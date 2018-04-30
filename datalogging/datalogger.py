@@ -120,17 +120,20 @@ class YoctoLogger(DataLogger):
         else:
             self.start_log = 0
         self.end_log = self.start_log
+        yoctodevices.init_yocto_api(self.config['VirtualHub']['host'],
+                                    self.config['VirtualHub']['port'])
         super().start()
+
+    def stop(self):
+        YAPI.FreeAPI()
+        super().stop()
 
     def log_data(self):
         self.start_log = self.end_log
         self.end_log = time.time()
 
         try:
-            for module in yoctodevices.modules(self.config['VirtualHub']
-                                                          ['host'],
-                                               self.config['VirtualHub']
-                                                          ['port']):
+            for module in yoctodevices.modules():
                 # Ignore relays, as they are detected as a Yoctopuce
                 # module but don't posess any actual physical sensors
                 # to log data from.
