@@ -94,12 +94,12 @@ def imagelogger(configfile):
                                                         function))
                 relay.registerValueCallback(start_recording)
 
-        # -------------------- Configuration update -------------------- #
-        # Save the configuration if new relays have been detected.
-        if config_changed:
-            with open(configfile, 'w') as config_f:
-                config.write(config_f)
+    # -------------------- Configuration update -------------------- #
+    # Save the configuration if new relays have been detected.
+    if config_changed:
+        with open(configfile, 'w') as config_f:
+            config.write(config_f)
 
-        # -------------------- Callbacks listening -------------------- #
-        while True:
-            YAPI.Sleep(1000)
+    # -------------------- Callbacks listening -------------------- #
+    while True:
+        YAPI.Sleep(1000)
